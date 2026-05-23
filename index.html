@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="mn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GAMEVERSE — PC Тоглоомын Мэдээлэл</title>
+
+  <!-- Google Fonts: Rajdhani (гарчиг) + Exo 2 (текст) -->
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Exo+2:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <!-- Манай CSS файл -->
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- ========================
+       НАВИГАЦИ (дээд хэсэг)
+       ======================== -->
+  <nav>
+    <!-- Лого -->
+    <div class="logo">GAME<span>VERSE</span></div>
+
+    <!-- Цэсний холбоосууд -->
+    <ul class="nav-links">
+      <li><a href="#">Нүүр</a></li>
+      <li><a href="#">Тоглоомууд</a></li>
+      <li><a href="#">Шинэ</a></li>
+      <li><a href="#">Топ</a></li>
+    </ul>
+
+    <!-- Хайх талбар -->
+    <div class="search-bar">
+      <!-- Хайх дүрс (SVG icon) -->
+      <svg width="14" height="14" fill="none" stroke="#6b7280" stroke-width="2" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.35-4.35"/>
+      </svg>
+      <!-- Хайх input — script.js дээр filterGames() функц дуудна -->
+      <input type="text" placeholder="Тоглоом хайх..." id="searchInput" oninput="filterGames()">
+    </div>
+  </nav>
+
+
+  <!-- ========================
+       HERO ХЭСЭГ (баннер)
+       ======================== -->
+  <div class="hero">
+    <!-- Жижиг шошго -->
+    <div class="hero-tag">🎮 PC Gaming Hub</div>
+
+    <!-- Том гарчиг -->
+    <h1>ДЭЛХИЙН ШИЛДЭГ<br><span class="glow">PC ТОГЛООМУУД</span></h1>
+
+    <!-- Тайлбар текст -->
+    <p>Хамгийн шинэ болон алдарт PC тоглоомуудын дэлгэрэнгүй мэдээлэл,
+       үнэлгээ, системийн шаардлагыг нэг дороос олоорой.</p>
+  </div>
+
+
+  <!-- ========================
+       ЖАНРЫН ШҮҮЛТҮҮР
+       ======================== -->
+  <div class="filters" id="filters">
+    <!-- Товч бүр дарахад filterByGenre() функц ажиллана -->
+    <!-- "active" class = сонгогдсон товч -->
+    <button class="filter-btn active" onclick="filterByGenre('all', this)">Бүгд</button>
+    <button class="filter-btn" onclick="filterByGenre('RPG', this)">RPG</button>
+    <button class="filter-btn" onclick="filterByGenre('Action', this)">Action</button>
+    <button class="filter-btn" onclick="filterByGenre('Strategy', this)">Strategy</button>
+    <button class="filter-btn" onclick="filterByGenre('FPS', this)">FPS</button>
+    <button class="filter-btn" onclick="filterByGenre('Adventure', this)">Adventure</button>
+    <button class="filter-btn" onclick="filterByGenre('Simulation', this)">Simulation</button>
+  </div>
+
+
+  <!-- ========================
+       ҮНДСЭН КОНТЕНТ
+       ======================== -->
+  <div class="featured">
+
+    <!-- --- ОНЦЛОХ ТОГЛООМ (том карт) --- -->
+    <div class="section-title">⚡ Онцлох тоглоом</div>
+
+    <!-- onclick дарахад 0-р индексийн тоглоомын modal нээнэ (games[0]) -->
+    <div class="featured-card" onclick="openModal(0)">
+
+      <!-- Зүүн тал: зураг/emoji хэсэг -->
+      <div class="featured-img" id="featuredImg">
+        <!-- ↓↓ ЗУРАГ СОЛИХ ГАЗАР ↓↓ -->
+        <!-- Emoji ашиглах бол: -->
+        <span class="game-art">🧙</span>
+        <!-- Зураг ашиглах бол дээрх мөрийг устгаад доорхыг нээ: -->
+        <!-- <img src="images/elden-ring.jpg" alt="Elden Ring"> -->
+
+        <!-- "Trending" шошго -->
+        <div class="badge">🔥 Trending</div>
+      </div>
+
+      <!-- Баруун тал: мэдээлэл -->
+      <div class="featured-info">
+        <div class="game-genre">RPG · Open World</div>           <!-- Жанр -->
+        <div class="game-title">Elden Ring</div>                  <!-- Нэр -->
+        <div class="game-desc">
+          Тархины хамгийн сорилттой action RPG. Нээлттэй ертөнцөд аялж,
+          хүчирхэг дайснуудтай тулалдана.
+        </div>                                                    <!-- Тайлбар -->
+
+        <!-- Мета мэдээлэл: он, хөгжүүлэгч, үнэлгээ -->
+        <div class="game-meta">
+          <div class="meta-item">
+            <div class="meta-label">Гаргасан</div>
+            <div class="meta-value">2022</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Хөгжүүлэгч</div>
+            <div class="meta-value">FromSoftware</div>
+          </div>
+          <div class="meta-item">
+            <div class="meta-label">Үнэлгээ</div>
+            <div class="rating"><span class="stars">★</span> 9.8</div>
+          </div>
+        </div>
+
+        <!-- Товчнууд -->
+        <div class="btn-group">
+          <button class="btn-primary">Дэлгэрэнгүй харах</button>
+          <button class="btn-secondary">Wishlist</button>
+        </div>
+      </div>
+    </div><!-- /featured-card -->
+
+
+    <!-- --- ТОГЛООМЫН GRID (жижиг картууд) --- -->
+    <div class="section-title">🎯 Бүх тоглоомууд</div>
+
+    <!-- JavaScript-аар дүүргэгдэнэ (script.js → renderGames()) -->
+    <div class="game-grid" id="gameGrid"></div>
+
+  </div><!-- /featured -->
+
+
+  <!-- ========================
+       MODAL (дэлгэрэнгүй цонх)
+       ======================== -->
+  <!-- Арын харанхуй давхарга — дарахад хаагдана (closeModal) -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+
+    <div class="modal" id="modal">
+      <!-- Зургийн хэсэг — JS-аар дүүргэгдэнэ -->
+      <div class="modal-header" id="modalHeader">
+        <!-- Хаах товч -->
+        <button class="modal-close" onclick="closeModalDirect()">✕</button>
+      </div>
+
+      <!-- Мэдээллийн хэсэг — JS-аар дүүргэгдэнэ -->
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+
+  </div><!-- /modal-overlay -->
+
+
+  <!-- ========================
+       FOOTER
+       ======================== -->
+  <footer>
+    <div class="logo-sm">GAMEVERSE</div>
+    <p>PC тоглоомуудын дэлгэрэнгүй мэдээллийн сан · 2024</p>
+  </footer>
+
+
+  <!-- JavaScript файл — хамгийн сүүлд холбоно -->
+  <script src="script.js"></script>
+
+</body>
+</html>

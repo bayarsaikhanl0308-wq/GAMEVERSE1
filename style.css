@@ -1,0 +1,790 @@
+/* ================================================
+   GAMEVERSE — style.css
+   Бүх өнгө, хэмжээ, layout энд байна
+   ================================================ */
+
+
+/* ------------------------
+   1. ӨНГӨНИЙ ТОХИРГОО
+   CSS Variable = нэг газраас бүх өнгийг солих боломж
+   ------------------------ */
+:root {
+  --bg:       #090b10;   /* Үндсэн арын өнгө (хар) */
+  --bg2:      #0e1219;   /* Хоёрдогч арын өнгө */
+  --bg3:      #141822;   /* Гуравдагч арын өнгө */
+  --accent:   #00e5ff;   /* Үндсэн тод өнгө (цэнхэр) */
+  --accent2:  #ff4757;   /* Хоёрдогч тод өнгө (улаан) */
+  --accent3:  #ffd32a;   /* Үнэлгээний өнгө (шар) */
+  --text:     #e8eaf0;   /* Үндсэн текстийн өнгө */
+  --muted:    #6b7280;   /* Бүдгэрсэн текстийн өнгө */
+  --card:     #111621;   /* Картын арын өнгө */
+  --border:   rgba(0,229,255,0.12); /* Хүрээний өнгө */
+}
+
+
+/* ------------------------
+   2. ҮНДСЭН ТОХИРГОО
+   ------------------------ */
+* {
+  margin: 0;           /* Гадна зай арилгах */
+  padding: 0;          /* Дотор зай арилгах */
+  box-sizing: border-box; /* Хэмжээ тооцоолох арга */
+}
+
+body {
+  background: var(--bg);           /* Арын өнгө */
+  color: var(--text);              /* Текстийн өнгө */
+  font-family: 'Exo 2', sans-serif; /* Фонт */
+  min-height: 100vh;               /* Дэлгэцийн өндрөөс багагүй */
+  overflow-x: hidden;              /* Хэвтээ scroll хориглох */
+}
+
+/* Арын тор хээ (grid pattern) */
+body::before {
+  content: '';
+  position: fixed;      /* Хөдлөхгүй арын зураг */
+  inset: 0;             /* Бүх талаар дүүргэх */
+  background-image:
+    linear-gradient(rgba(0,229,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px; /* Торны хэмжээ */
+  pointer-events: none;       /* Клик дамжуулах */
+  z-index: 0;                 /* Хамгийн доор байх */
+}
+
+
+/* ------------------------
+   3. НАВИГАЦИ
+   ------------------------ */
+nav {
+  position: sticky;    /* Дээр наалдсан байх (scroll хийхэд дагана) */
+  top: 0;
+  z-index: 100;        /* Бусад элементүүдийн дээр байх */
+  background: rgba(9,11,16,0.92); /* Бага зэрэг тунгалаг хар */
+  backdrop-filter: blur(12px);    /* Ар талыг бүдгэрүүлэх */
+  border-bottom: 1px solid var(--border); /* Доод хүрээ */
+  padding: 0 2rem;
+  display: flex;                  /* Flex layout */
+  align-items: center;            /* Босоо голлуулах */
+  justify-content: space-between; /* Хоорондоо зай тавих */
+  height: 64px;                   /* Навигацийн өндөр */
+}
+
+/* Лого */
+.logo {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  color: var(--accent);
+  text-shadow: 0 0 20px rgba(0,229,255,0.5); /* Гэрэлтэх эффект */
+}
+
+/* Логоны улаан хэсэг ("VERSE") */
+.logo span {
+  color: var(--accent2);
+}
+
+/* Цэсний жагсаалт */
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none; /* Цэгийг арилгах */
+}
+
+/* Цэсний холбоос */
+.nav-links a {
+  color: var(--muted);
+  text-decoration: none;       /* Доогуур зураасыг арилгах */
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;   /* Том үсгээр */
+  transition: color 0.2s;      /* Өнгө өөрчлөлтийн хурд */
+}
+
+.nav-links a:hover {
+  color: var(--accent); /* Hover дээр цэнхэр болох */
+}
+
+/* Хайх талбар */
+.search-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.4rem 0.8rem;
+}
+
+.search-bar input {
+  background: none;      /* Арын өнгөгүй */
+  border: none;          /* Хүрээгүй */
+  outline: none;         /* Focus хүрээгүй */
+  color: var(--text);
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.85rem;
+  width: 180px;
+}
+
+.search-bar input::placeholder {
+  color: var(--muted); /* Placeholder текстийн өнгө */
+}
+
+
+/* ------------------------
+   4. HERO ХЭСЭГ
+   ------------------------ */
+.hero {
+  position: relative;
+  z-index: 1;
+  padding: 5rem 2rem 3rem; /* Дээр, хажуу, доор зай */
+  text-align: center;
+}
+
+/* Жижиг шошго ("PC Gaming Hub") */
+.hero-tag {
+  display: inline-block;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  padding: 0.3rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+}
+
+/* Том гарчиг */
+.hero h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(2.5rem, 6vw, 5rem); /* Responsive хэмжээ */
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 2px;
+  margin-bottom: 1rem;
+}
+
+/* Гэрэлтэх текст ("PC ТОГЛООМУУД") */
+.hero h1 .glow {
+  color: var(--accent);
+  text-shadow: 0 0 40px rgba(0,229,255,0.4);
+}
+
+/* Тайлбар текст */
+.hero p {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 500px;      /* Хэт өргөн болохоос сэргийлэх */
+  margin: 0 auto 2rem;   /* Голлуулах */
+  line-height: 1.7;
+}
+
+
+/* ------------------------
+   5. ШҮҮЛТҮҮР ТОВЧНУУД
+   ------------------------ */
+.filters {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;       /* Жижиг дэлгэцэнд шинэ мөрт орох */
+  padding: 0 2rem 3rem;
+}
+
+/* Шүүлтүүрийн товч */
+.filter-btn {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  padding: 0.4rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;       /* Хулганы дүрс өөрчлөх */
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.2s;
+}
+
+/* Hover болон идэвхтэй товч */
+.filter-btn:hover,
+.filter-btn.active {
+  border-color: var(--accent);
+  color: var(--accent);
+  background: rgba(0,229,255,0.05);
+}
+
+
+/* ------------------------
+   6. ҮНДСЭН КОНТЕНТ ХЭСЭГ
+   ------------------------ */
+.featured {
+  position: relative;
+  z-index: 1;
+  padding: 0 2rem 4rem;
+  max-width: 1300px;   /* Хамгийн их өргөн */
+  margin: 0 auto;      /* Голлуулах */
+}
+
+/* Хэсгийн гарчиг ("⚡ Онцлох тоглоом") */
+.section-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Гарчгийн баруун талын зураас */
+.section-title::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+
+/* ------------------------
+   7. ОНЦЛОХ ТОМ КАРТ
+   ------------------------ */
+.featured-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* 2 баганатай */
+  margin-bottom: 4rem;
+  transition: border-color 0.3s;
+  cursor: pointer;
+}
+
+.featured-card:hover {
+  border-color: rgba(0,229,255,0.4); /* Hover дээр цэнхэр хүрээ */
+}
+
+/* Зүүн тал: зурагны хэсэг */
+.featured-img {
+  position: relative;
+  min-height: 340px;
+  /* ↓↓ АРЫ ӨНГИЙГ ЭНЭ ГАЗРААС СОЛИНО ↓↓ */
+  background: linear-gradient(135deg, #1a0533 0%, #0d1f3c 50%, #001a2c 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Онцлох тоглоомын emoji/зураг */
+.featured-img .game-art {
+  font-size: 8rem;
+  filter: drop-shadow(0 0 30px rgba(0,229,255,0.3));
+  animation: float 4s ease-in-out infinite; /* Хөвөх animation */
+}
+
+/* Онцлох тоглоомд зураг ашиглах бол */
+.featured-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;    /* Зурагыг дүүргэх */
+  position: absolute;
+  inset: 0;
+}
+
+/* Баруун тийш бүдгэрэх эффект */
+.featured-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 60%, var(--card));
+}
+
+/* "Trending" шошго */
+.badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--accent2); /* Улаан */
+  color: white;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  padding: 0.3rem 0.8rem;
+  border-radius: 3px;
+  text-transform: uppercase;
+  z-index: 2;
+}
+
+/* Баруун тал: мэдээллийн хэсэг */
+.featured-info {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Жанрын текст */
+.game-genre {
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+}
+
+/* Тоглоомын нэр */
+.game-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.8rem;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+/* Тайлбар текст */
+.game-desc {
+  color: var(--muted);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* Мета мэдээллийн эгнээ (он, хөгжүүлэгч, үнэлгээ) */
+.game-meta {
+  display: flex;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.meta-item { font-size: 0.8rem; }
+
+.meta-label {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.meta-value {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* Одны үнэлгээ */
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--accent3); /* Шар өнгө */
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.stars { font-size: 0.85rem; }
+
+/* Товчнуудын бүлэг */
+.btn-group {
+  display: flex;
+  gap: 0.75rem;
+}
+
+/* Үндсэн товч */
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  padding: 0.7rem 1.8rem;
+  border-radius: 6px;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-primary:hover {
+  background: #33ecff;
+  box-shadow: 0 0 20px rgba(0,229,255,0.4);
+}
+
+/* Хоёрдогч товч */
+.btn-secondary {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 0.7rem 1.8rem;
+  border-radius: 6px;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+
+/* ------------------------
+   8. ТОГЛООМЫН GRID КАРТ
+   ------------------------ */
+.game-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); /* Автомат багана */
+  gap: 1.5rem;
+}
+
+/* Жижиг карт */
+.game-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s;
+  animation: fadeUp 0.5s both; /* Доороос гарах animation */
+}
+
+/* Картын гарах animation */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Hover эффект */
+.game-card:hover {
+  border-color: rgba(0,229,255,0.35);
+  transform: translateY(-4px);          /* Дээш хөдлөх */
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+
+/* Зургийн хэсэг (дээд хэсэг) */
+.card-thumb {
+  position: relative;
+  height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  overflow: hidden;
+}
+
+/* ↓↓ КАРТЫН ЗУРАГТ img ашиглах бол ↓↓ */
+.card-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;  /* Зурагыг таслахгүй дүүргэх */
+  position: absolute;
+  inset: 0;
+}
+
+/* Доод тийш бүдгэрэх эффект */
+.card-thumb .overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, transparent 40%, var(--card));
+}
+
+/* Картын доод хэсэг */
+.card-body {
+  padding: 1rem 1.2rem 1.2rem;
+}
+
+/* Жанрын текст */
+.card-genre {
+  color: var(--accent);
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 0.4rem;
+}
+
+/* Тоглоомын нэр */
+.card-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Картын доод хэсэг (үнэлгээ + он) */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 0.8rem;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--border);
+}
+
+.card-rating {
+  color: var(--accent3); /* Шар үнэлгээ */
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+.card-year {
+  color: var(--muted);
+  font-size: 0.75rem;
+}
+
+/* Шошго (tag) */
+.tag {
+  display: inline-block;
+  background: rgba(0,229,255,0.08);
+  border: 1px solid rgba(0,229,255,0.15);
+  color: var(--accent);
+  font-size: 0.65rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  margin: 0.2rem 0.2rem 0 0;
+  letter-spacing: 0.5px;
+}
+
+
+/* ------------------------
+   9. MODAL (дэлгэрэнгүй цонх)
+   ------------------------ */
+/* Харанхуй арын давхарга */
+.modal-overlay {
+  position: fixed;       /* Дэлгэцэнд бэхлэгдсэн */
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;            /* Анхандаа нуугдсан */
+  pointer-events: none;  /* Клик хориглосон */
+  transition: opacity 0.25s;
+  backdrop-filter: blur(6px);
+}
+
+/* Modal нээлттэй үед */
+.modal-overlay.open {
+  opacity: 1;
+  pointer-events: all;   /* Клик зөвшөөрсөн */
+}
+
+/* Modal цонх */
+.modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  width: 100%;
+  max-width: 680px;      /* Хамгийн их өргөн */
+  max-height: 90vh;      /* Дэлгэцийн 90% өндөр */
+  overflow-y: auto;      /* Дотор scroll */
+  transform: translateY(30px); /* Анхандаа доош байх */
+  transition: transform 0.25s;
+}
+
+/* Modal нээлттэй үед дээш хөдлөх */
+.modal-overlay.open .modal {
+  transform: translateY(0);
+}
+
+/* Modal зургийн хэсэг */
+.modal-header {
+  position: relative;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 7rem;
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
+}
+
+/* Modal дээр зураг ашиглах бол */
+.modal-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  inset: 0;
+}
+
+/* Хаах товч (X) */
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: rgba(0,0,0,0.5);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.modal-close:hover {
+  border-color: var(--accent2);
+  color: var(--accent2);
+}
+
+/* Modal мэдээллийн хэсэг */
+.modal-body {
+  padding: 2rem;
+}
+
+/* Modal тоглоомын нэр */
+.modal-title {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Modal мета мэдээлэл (он, хөгжүүлэгч, жанр) */
+.modal-meta {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  margin: 1.5rem 0;
+  padding: 1.2rem;
+  background: var(--bg3);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+}
+
+.modal-meta-item .label {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.modal-meta-item .value {
+  color: var(--text);
+  font-weight: 600;
+  margin-top: 0.3rem;
+  font-size: 0.95rem;
+}
+
+/* Modal тайлбар */
+.modal-desc {
+  color: var(--muted);
+  line-height: 1.8;
+  font-size: 0.9rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Системийн шаардлага хэсэг */
+.sys-req {
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+.sys-req h4 {
+  font-family: 'Rajdhani', sans-serif;
+  letter-spacing: 2px;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+/* Системийн шаардлагын 2 баганат layout */
+.req-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+}
+
+.req-item    { font-size: 0.8rem; }
+.req-label   { color: var(--muted); margin-bottom: 0.1rem; }
+.req-val     { color: var(--text); }
+
+
+/* ------------------------
+   10. FOOTER
+   ------------------------ */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 3rem 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.8rem;
+  letter-spacing: 1px;
+  margin-top: 4rem;
+}
+
+footer .logo-sm {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.2rem;
+  letter-spacing: 3px;
+  color: var(--accent);
+  margin-bottom: 0.5rem;
+}
+
+
+/* ------------------------
+   11. ХӨВӨХ ANIMATION (онцлох тоглоом)
+   ------------------------ */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); } /* Дээш 12px хөдлөх */
+}
+
+
+/* ------------------------
+   12. RESPONSIVE (утас/таблет)
+   ------------------------ */
+@media (max-width: 768px) {
+  /* Онцлох карт нэг баганатай болох */
+  .featured-card {
+    grid-template-columns: 1fr;
+  }
+
+  /* Зургийн өндрийг багасгах */
+  .featured-img {
+    min-height: 200px;
+  }
+
+  /* Бүдгэрэх чиглэлийг өөрчлөх */
+  .featured-img::after {
+    background: linear-gradient(180deg, transparent 40%, var(--card));
+  }
+
+  /* Навигацийн цэсийг нуух */
+  .nav-links {
+    display: none;
+  }
+
+  /* Тоглоомын нэрийн хэмжээ багасгах */
+  .game-title {
+    font-size: 2rem;
+  }
+
+  /* Modal мета 2 баганатай болох */
+  .modal-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+}
